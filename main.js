@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         GitHub - Make PRs easier
 // @namespace    http://adamwknox.com
-// @version      0.6
-// @description  Collapsing Headers on diffs
+// @version      1.0
+// @description  Add some js buttons to diffs
 // @author       DrKnoxy
 // @include      https://github.com/*
 // @grant        none

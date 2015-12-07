@@ -10,4 +10,4 @@
 
 ## To Use
 1. Install [Tampermonkey for Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
-1. Install the script via [Greasy Frok](https://greasyfork.org/en/scripts/10446-github-make-prs-easier) so that you can get auto updates
+1. Install the script via [Greasy Frok](https://greasyfork.org/en/scripts/10446-github-make-prs-easier-to-diff) so that you can get auto updates

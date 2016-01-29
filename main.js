@@ -1,15 +1,20 @@
 // ==UserScript==
 // @name         GitHub - Make PRs easier to diff
 // @namespace    https://github.com/drKnoxy/
-// @version      1.0
+// @version      1.1
 // @description  Add some js buttons to diffs
 // @author       DrKnoxy
 // @include      https://github.com/*
 // @grant        none
 // ==/UserScript==
 
+/**
+ * Internal Application Logic
+ */
 var tool = (function() {
-    
+    // Globals and exports
+    ////////////////////////////////////
+
     // Prep global variables
     var isWhitespaceVisible = _isWhitespaceVisible();
 
@@ -65,6 +70,7 @@ var tool = (function() {
 
             _addToggle(toggle);
         }
+
     })();
 
     /**
@@ -102,22 +108,74 @@ var tool = (function() {
 
     })(isWhitespaceVisible);
 
+    var betterTextarea = (function(){
+        var tabInsertCharacter = "    ";
+
+        return {
+            init: init
+        };
+
+        //////////////////////////
+
+        function init() {
+            useTabForIndenting();
+        }
+
+        function useTabForIndenting() {
+            $(document).on('keydown', 'textarea', function(e) {
+                // tab was pressed
+                if (e.keyCode === 9) {
+                    // get caret position/selection
+                    var start = this.selectionStart;
+                    var end = this.selectionEnd;
+
+                    var $this = $(this);
+                    var value = $this.val();
+
+                    var newVal = [
+                        value.substring(0, start),
+                        tabInsertCharacter,
+                        value.substring(end)
+                    ].join('');
+
+                    $this.val(newVal);
+
+                    // put caret at right position
+                    this.selectionStart = this.selectionEnd = start + tabInsertCharacter.length;
+
+                    // prevent the focus loss
+                    e.preventDefault();
+                }
+            });
+        }
+
+    })();
+
     /**
      * Public methods
      */
     return {
-        monitor: monitor,
+        init: init,
         addElements: addElements
     }
 
-    //////////////////////
+    // Implementation logic
+    /////////////////////
 
-    function monitor() {
+    /**
+     * call me once
+     */
+    function init() {
         // Watch for events
         collapse.monitor();
         whitespace.monitor();
+        betterTextarea.init();
     }
 
+    /**
+     * call me on pjax route change, 
+     * or if you are nervous that ajax happened
+     */
     function addElements() {
         collapse.addElement();
         whitespace.addElement();
@@ -143,17 +201,22 @@ var tool = (function() {
     }
 
     function _isWhitespaceVisible() {
-        var search = {};
-        if (window.location.search) {
-            window.location.search.replace('?', '').split('&').forEach(function(el) {
-                var group = el.split('=');
-                var prop = group[0];
-                var val = group[1] || '';
-                search[prop] = val;
-            });
-        }
-
+        var search = _getSearchObject();
         return (search.w && parseInt(search.w, 10) == 1);
+
+        function _getSearchObject() {
+            var search = {};
+            if (window.location.search) {
+                window.location.search.replace('?', '').split('&').forEach(function(el) {
+                    var group = el.split('=');
+                    var prop = group[0];
+                    var val = group[1] || '';
+                    search[prop] = val;
+                });
+            }
+
+            return search;
+        }
     }
 
     /**
@@ -181,12 +244,12 @@ var tool = (function() {
 
 })();
 
-// ready!
+/**
+ * Applying our tool to github
+ */
 $(function() {
-    // Make sure monitoring is going
-    tool.monitor();
 
-    // Add elements on page load
+    tool.init();
     tool.addElements();
 
     // Add elements on page change

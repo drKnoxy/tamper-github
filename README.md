@@ -7,6 +7,7 @@
 1. Ignore whitespace toggle in diffs
   * There is an added button in the button bar for file diffs
   * Like the `-b` or `--ignore-whitespace` option in terminal, but for github! very exciting
+1. Textareas use the tab key for inserting 4 spaces, instead of moving focus, hazaa
 
 ## To Use
 1. Install [Tampermonkey for Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)

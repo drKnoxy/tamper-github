@@ -1,13 +1,11 @@
 # Tampering with Github
 
 ## Features
-1. Collapsing headers in file diffs
-  * There is an added button in the button bar for file diffs that collapses all files
-  * Or you can click the file header to collapse just the one file
-1. Ignore whitespace toggle in diffs
-  * There is an added button in the button bar for file diffs
-  * Like the `-b` or `--ignore-whitespace` option in terminal, but for github! very exciting
-1. Textareas use the tab key for inserting 4 spaces, instead of moving focus, hazaa
+1. [x] Clicking on a header in PR diffs should collapse the file blob
+2. [ ] Add a button to collapse / expand all files in a PR diff
+3. [ ] Add a button to ignore whitespace in diffs
+ Like the `-b` or `--ignore-whitespace` option in terminal. Github supports this via the url query param `?w=1`
+1. [ ] Tab key in text areas should insert 4 spaces
 
 ## To Use
 1. Install [Tampermonkey for Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
